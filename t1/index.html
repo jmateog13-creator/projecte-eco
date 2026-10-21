@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sala d'escolta · Temporada 1</title>
+<meta name="description" content="Projecte ECO · Temporada 1: els sons de cada missió del quadern.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600;800&display=swap">
+<style>
+/* Concepte: la pantalla de l'ECO. Tinta i paper, com el quadern; cada missió és un panell amb botons grans. */
+:root {
+  --paper: #f6f6f3;
+  --ink: #141414;
+  --soft: #e6e6e1;
+  --mute: #66665f;
+  --line: #141414;
+  --on: #141414;
+  --on-fg: #f6f6f3;
+  --head: 'Bebas Neue', 'Oswald', Impact, sans-serif;
+  --body: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --paper: #121211; --ink: #f1f1ec; --soft: #24241f; --mute: #a3a39a; --line: #f1f1ec; --on: #f1f1ec; --on-fg: #121211; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --paper: #121211; --ink: #f1f1ec; --soft: #24241f; --mute: #a3a39a; --line: #f1f1ec; --on: #f1f1ec; --on-fg: #121211; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.45 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 920px; margin: 0 auto; padding-block: 28px 56px; display: flex; flex-direction: column; gap: 22px; }
+
+header { border-bottom: 3px solid var(--line); padding-bottom: 14px; display: grid; gap: 6px; }
+.k { font: 800 12px var(--mono); letter-spacing: .18em; text-transform: uppercase; }
+h1 { font: 400 clamp(48px, 11vw, 92px)/.9 var(--head); margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h1 span { color: var(--mute); }
+.intro { max-width: 62ch; margin: 0; }
+.tips { display: flex; flex-wrap: wrap; gap: 8px; }
+.tip { font: 600 13px var(--mono); border: 1.5px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 16px; }
+.m { border: 2.5px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.m .tag { display: flex; justify-content: space-between; gap: 8px; font: 800 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.m .tag b { background: var(--on); color: var(--on-fg); padding: 2px 8px; }
+.m h2 { font: 400 34px/1 var(--head); margin: 0; letter-spacing: .02em; }
+.m p { margin: 0; color: var(--mute); }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+button { font: 800 17px var(--body); color: var(--ink); background: var(--paper); border: 2.5px solid var(--line); border-radius: 10px;
+  padding: 12px 16px; min-height: 52px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+button::before { content: ''; width: 0; height: 0; border-left: 12px solid currentColor; border-top: 8px solid transparent; border-bottom: 8px solid transparent; }
+button:hover { background: var(--soft); }
+button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+button.on { background: var(--on); color: var(--on-fg); }
+button.on::before { border: 0; width: 12px; height: 14px; background: linear-gradient(90deg, currentColor 35%, transparent 35% 65%, currentColor 65%); }
+
+.screen { border: 1.5px dashed var(--line); border-radius: 8px; min-height: 46px; display: flex; align-items: center; justify-content: center;
+  gap: 6px; flex-wrap: wrap; padding: 6px 8px; font: 800 16px var(--mono); }
+.dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); }
+.dot.lit { background: var(--ink); }
+.nm { padding: 2px 6px; border-radius: 6px; }
+.nm.lit { background: var(--on); color: var(--on-fg); }
+
+.stop { align-self: flex-start; }
+.stop::before { border: 0; width: 13px; height: 13px; background: currentColor; }
+footer { border-top: 1.5px solid var(--line); padding-top: 12px; font-size: 13px; color: var(--mute); display: grid; gap: 4px; }
+footer a { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <span class="k">Projecte ECO · Arxiu de Troia · Temporada 1</span>
+    <h1>Sala <span>d'escolta</span></h1>
+    <p class="intro">Aquí pots sentir el que has après a cada missió del quadern. Tria una missió i prem un botó. No cal fer res més.</p>
+    <div class="tips"><span class="tip">Posa't els auriculars</span><span class="tip">Puja el volum a poc a poc</span></div>
+  </header>
+
+  <section class="grid" aria-label="Missions">
+    <article class="m" id="m1">
+      <div class="tag"><b>Missió 1</b><span>Quadern · pàg. 4</span></div>
+      <h2>El pols</h2>
+      <p>El pols és sempre igual, com un rellotge. El ritme són sons llargs i curts a sobre.</p>
+      <div class="screen" data-screen="m1" aria-hidden="true"></div>
+      <div class="btns">
+        <button data-play="pols">Només el pols</button>
+        <button data-play="ritme">Pols i ritme</button>
+      </div>
+    </article>
+
+    <article class="m" id="m2">
+      <div class="tag"><b>Missió 2</b><span>Quadern · pàg. 7</span></div>
+      <h2>El timbre</h2>
+      <p>La mateixa nota amb tres instruments. Sonen diferent: és el timbre.</p>
+      <div class="btns">
+        <button data-play="veu">Veu</button>
+        <button data-play="flauta">Flauta</button>
+        <button data-play="corda">Corda</button>
+        <button data-play="tots3">Els tres seguits</button>
+      </div>
+    </article>
+
+    <article class="m" id="m3">
+      <div class="tag"><b>Missió 3</b><span>Quadern · pàg. 8</span></div>
+      <h2>Fluix o fort</h2>
+      <p>La mateixa melodia dues vegades. Primer <i>p</i> (piano, fluix). Després <i>f</i> (forte, fort).</p>
+      <div class="btns">
+        <button data-play="piano">p · fluix</button>
+        <button data-play="forte">f · fort</button>
+      </div>
+    </article>
+
+    <article class="m" id="m4">
+      <div class="tag"><b>Missió 4</b><span>Quadern · pàg. 13</span></div>
+      <h2>Agut o greu</h2>
+      <p>Un so greu és gruixut, com un bombo. Un so agut és prim, com un xiulet.</p>
+      <div class="btns">
+        <button data-play="greu">Greu</button>
+        <button data-play="agut">Agut</button>
+        <button data-play="puja">La melodia puja</button>
+        <button data-play="baixa">La melodia baixa</button>
+      </div>
+    </article>
+
+    <article class="m" id="m5">
+      <div class="tag"><b>Missió 5</b><span>Quadern · pàg. 15</span></div>
+      <h2>Les figures</h2>
+      <p>Sents el pols (clic) i la nota. Compta quants polsos dura cada figura.</p>
+      <div class="screen" data-screen="m5" aria-hidden="true"></div>
+      <div class="btns">
+        <button data-play="rodona">Rodona · 4</button>
+        <button data-play="blanca">Blanques · 2</button>
+        <button data-play="negra">Negres · 1</button>
+        <button data-play="corxera">Corxeres · mig</button>
+      </div>
+    </article>
+
+    <article class="m" id="m6">
+      <div class="tag"><b>Missió 6</b><span>Quadern · pàg. 18</span></div>
+      <h2>De pressa o a poc a poc</h2>
+      <p>La mateixa cançó a 60 BPM (un batec cada segon) i a 120 BPM (el doble de ràpid).</p>
+      <div class="screen" data-screen="m6" aria-hidden="true"></div>
+      <div class="btns">
+        <button data-play="bpm60">60 BPM · lent</button>
+        <button data-play="bpm120">120 BPM · ràpid</button>
+      </div>
+    </article>
+
+    <article class="m" id="m9">
+      <div class="tag"><b>Missió 9</b><span>Quadern · pàg. 26</span></div>
+      <h2>Les quatre famílies</h2>
+      <p>Mira què vibra: una corda, l'aire dins d'un tub, una pell o l'electricitat.</p>
+      <div class="btns">
+        <button data-play="fcorda">Corda</button>
+        <button data-play="fvent">Vent</button>
+        <button data-play="fperc">Percussió</button>
+        <button data-play="felec">Electrònica</button>
+      </div>
+    </article>
+
+    <article class="m" id="m11">
+      <div class="tag"><b>Missió 11</b><span>Quadern · pàg. 32</span></div>
+      <h2>Els set noms</h2>
+      <p>Do, Re, Mi, Fa, Sol, La, Si… i torna el Do, més agut. Mira com s'encén cada nom.</p>
+      <div class="screen" data-screen="m11" aria-hidden="true"></div>
+      <div class="btns">
+        <button data-play="escala">Puja l'escala</button>
+        <button data-play="escalab">Baixa l'escala</button>
+      </div>
+    </article>
+  </section>
+
+  <button class="stop" id="stop">Atura-ho tot</button>
+
+  <footer>
+    <span>Tots els sons es fan aquí mateix, amb l'ordinador o el mòbil. No hi ha cap gravació.</span>
+    <span><a href="../">Totes les temporades</a> · Projecte ECO · Llenguatge musical · 3r ESO</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  let ac = null, master = null, bus = null, timers = [], current = null;
+  const NOTES = { Do3: 130.81, Re3: 146.83, Mi3: 164.81, Fa3: 174.61, Sol3: 196.0, La3: 220.0, Si3: 246.94,
+    Do4: 261.63, Re4: 293.66, Mi4: 329.63, Fa4: 349.23, Sol4: 392.0, La4: 440.0, Si4: 493.88, Do5: 523.25, Do6: 1046.5 };
+
+  function ctx() {
+    if (!ac) {
+      ac = new (window.AudioContext || window.webkitAudioContext)();
+      master = ac.createDynamicsCompressor(); master.threshold.value = -14; master.ratio.value = 3;
+      master.connect(ac.destination);
+    }
+    if (ac.state === 'suspended') ac.resume();
+    return ac;
+  }
+  function newBus() {
+    if (bus) { const old = bus; old.gain.setTargetAtTime(0, ac.currentTime, 0.03); setTimeout(() => old.disconnect(), 300); }
+    bus = ac.createGain(); bus.gain.value = 1; bus.connect(master); return bus;
+  }
+  function stopAll() {
+    timers.forEach(clearTimeout); timers = [];
+    if (bus) { bus.gain.setTargetAtTime(0, ac.currentTime, 0.03); }
+    document.querySelectorAll('button.on').forEach((b) => b.classList.remove('on'));
+    document.querySelectorAll('.lit').forEach((e) => e.classList.remove('lit'));
+    current = null;
+  }
+  const at = (sec, fn) => timers.push(setTimeout(fn, Math.max(0, (sec - ac.currentTime) * 1000)));
+
+  // ── Instruments ──
+  function env(g, t, a, d, peak, rel) {
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(peak, t + a);
+    g.gain.setValueAtTime(peak, t + Math.max(a, d - rel));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  }
+  function osc(type, f, t, d, out, detune) { const o = ac.createOscillator(); o.type = type; o.frequency.value = f; if (detune) o.detune.value = detune; o.connect(out); o.start(t); o.stop(t + d + 0.05); return o; }
+  function vibrato(o, t, rate, depth) { const l = ac.createOscillator(), g = ac.createGain(); l.frequency.value = rate; g.gain.value = depth; l.connect(g).connect(o.frequency); l.start(t); l.stop(t + 6); }
+
+  const I = {
+    piano(f, t, d, v = 0.5) { // so neutre per a melodies
+      const g = ac.createGain(); env(g, t, 0.01, d, v, Math.min(0.3, d * 0.6)); g.connect(bus);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400; lp.connect(g);
+      osc('triangle', f, t, d, lp); osc('sine', f * 2, t, d, lp);
+    },
+    veu(f, t, d, v = 0.5) {
+      const g = ac.createGain(); env(g, t, 0.12, d, v, 0.25); g.connect(bus);
+      const f1 = ac.createBiquadFilter(); f1.type = 'bandpass'; f1.frequency.value = 750; f1.Q.value = 6;
+      const f2 = ac.createBiquadFilter(); f2.type = 'bandpass'; f2.frequency.value = 1150; f2.Q.value = 7;
+      f1.connect(g); f2.connect(g);
+      const o = osc('sawtooth', f, t, d, f1); o.connect(f2); vibrato(o, t, 5.2, 4);
+    },
+    flauta(f, t, d, v = 0.5) {
+      const g = ac.createGain(); env(g, t, 0.08, d, v, 0.2); g.connect(bus);
+      const o = osc('sine', f, t, d, g); vibrato(o, t, 5, 3);
+      const n = ac.createBufferSource(), b = ac.createBuffer(1, ac.sampleRate * (d + 0.1), ac.sampleRate), c = b.getChannelData(0);
+      for (let i = 0; i < c.length; i++) c[i] = (Math.random() * 2 - 1) * 0.06;
+      n.buffer = b; const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f * 2; bp.Q.value = 3; n.connect(bp).connect(g); n.start(t);
+    },
+    corda(f, t, d, v = 0.5) {
+      const g = ac.createGain(); env(g, t, 0.18, d, v, 0.2); g.connect(bus);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3000; lp.connect(g);
+      const o = osc('sawtooth', f, t, d, lp); vibrato(o, t + 0.2, 5.5, 5); osc('sawtooth', f, t, d, lp, 6);
+    },
+    vent(f, t, d, v = 0.5) { // metall (trompeta)
+      const g = ac.createGain(); env(g, t, 0.05, d, v, 0.15); g.connect(bus);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(600, t); lp.frequency.linearRampToValueAtTime(2600, t + 0.12); lp.connect(g);
+      osc('sawtooth', f, t, d, lp); osc('square', f, t, d, lp, -4);
+    },
+    tambor(t, v = 0.8) {
+      const g = ac.createGain(); env(g, t, 0.003, 0.45, v, 0.4); g.connect(bus);
+      const o = ac.createOscillator(); o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(60, t + 0.3); o.connect(g); o.start(t); o.stop(t + 0.5);
+      const n = ac.createBufferSource(), b = ac.createBuffer(1, ac.sampleRate * 0.2, ac.sampleRate), c = b.getChannelData(0);
+      for (let i = 0; i < c.length; i++) c[i] = (Math.random() * 2 - 1) * (1 - i / c.length);
+      n.buffer = b; const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; const ng = ac.createGain(); ng.gain.value = 0.35;
+      n.connect(lp).connect(ng).connect(g); n.start(t);
+    },
+    elec(f, t, d, v = 0.45) {
+      const g = ac.createGain(); env(g, t, 0.01, d, v, 0.1); g.connect(bus);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 9; lp.frequency.setValueAtTime(300, t); lp.frequency.exponentialRampToValueAtTime(4000, t + d * 0.7); lp.connect(g);
+      osc('square', f, t, d, lp); osc('sawtooth', f / 2, t, d, lp);
+    },
+    clic(t, fort) {
+      const g = ac.createGain(); env(g, t, 0.002, 0.06, fort ? 0.5 : 0.3, 0.05); g.connect(bus);
+      osc('square', fort ? 1600 : 1100, t, 0.06, g);
+    },
+  };
+
+  // ── Pantalles (llums) ──
+  function screenDots(id, n) { const s = document.querySelector(`[data-screen="${id}"]`); s.innerHTML = Array.from({ length: n }, () => '<span class="dot"></span>').join(''); return [...s.children]; }
+  function screenNames(id, names) { const s = document.querySelector(`[data-screen="${id}"]`); s.innerHTML = names.map((n) => `<span class="nm">${n}</span>`).join(''); return [...s.children]; }
+  function flash(el, t, d) { at(t, () => el.classList.add('lit')); at(t + d, () => el.classList.remove('lit')); }
+
+  // ── Exemples ──
+  const melodia = ['Do4', 'Re4', 'Mi4', 'Do4', 'Mi4', 'Fa4', 'Sol4', 'Sol4'];
+  function tune(instr, t0, beat, v) { melodia.forEach((n, i) => I[instr](NOTES[n], t0 + i * beat, beat * 0.9, v)); return melodia.length * beat; }
+
+  const EX = {
+    pols(t) { const b = 60 / 72, dots = screenDots('m1', 8); for (let i = 0; i < 8; i++) { I.clic(t + i * b, i % 4 === 0); flash(dots[i], t + i * b, b * 0.5); } return 8 * b; },
+    ritme(t) {
+      const b = 60 / 72, dots = screenDots('m1', 8);
+      for (let i = 0; i < 8; i++) { I.clic(t + i * b, false); flash(dots[i], t + i * b, b * 0.5); }
+      let x = 0; [1, 1, 2, 1, 1, 2].forEach((d) => { I.piano(NOTES.Sol4, t + x * b, d * b * 0.92, 0.45); x += d; });
+      return 8 * b;
+    },
+    veu(t) { I.veu(NOTES.La3, t, 1.6); return 1.7; },
+    flauta(t) { I.flauta(NOTES.La4, t, 1.6); return 1.7; },
+    corda(t) { I.corda(NOTES.La3, t, 1.6); return 1.7; },
+    tots3(t) { I.veu(NOTES.La3, t, 1.4); I.flauta(NOTES.La4, t + 1.8, 1.4); I.corda(NOTES.La3, t + 3.6, 1.4); return 5.1; },
+    piano(t) { return tune('piano', t, 0.42, 0.08); },
+    forte(t) { return tune('piano', t, 0.42, 0.75); },
+    greu(t) { I.piano(NOTES.Do3, t, 1.6, 0.6); return 1.7; },
+    agut(t) { I.piano(NOTES.Do6, t, 1.6, 0.35); return 1.7; },
+    puja(t) { ['Do4', 'Re4', 'Mi4', 'Fa4', 'Sol4', 'La4', 'Si4', 'Do5'].forEach((n, i) => I.piano(NOTES[n], t + i * 0.4, 0.38, 0.5)); return 3.3; },
+    baixa(t) { ['Do5', 'Si4', 'La4', 'Sol4', 'Fa4', 'Mi4', 'Re4', 'Do4'].forEach((n, i) => I.piano(NOTES[n], t + i * 0.4, 0.38, 0.5)); return 3.3; },
+    _fig(t, dur, n) { // 8 polsos de clic; la nota dura «dur» polsos
+      const b = 60 / 80, dots = screenDots('m5', 8);
+      for (let i = 0; i < 8; i++) { I.clic(t + i * b, i % 4 === 0); flash(dots[i], t + i * b, b * 0.5); }
+      for (let k = 0; k < n; k++) I.piano(NOTES.Sol4, t + k * dur * b, dur * b * 0.93, 0.5);
+      return 8 * b;
+    },
+    rodona(t) { return EX._fig(t, 4, 2); },
+    blanca(t) { return EX._fig(t, 2, 4); },
+    negra(t) { return EX._fig(t, 1, 8); },
+    corxera(t) { return EX._fig(t, 0.5, 16); },
+    _bpm(t, bpm) {
+      const b = 60 / bpm, n = bpm === 60 ? 8 : 16, dots = screenDots('m6', n);
+      for (let i = 0; i < n; i++) { I.tambor(t + i * b, 0.5); flash(dots[i], t + i * b, b * 0.5); }
+      for (let r = 0; r < n / 8; r++) melodia.forEach((nn, i) => I.flauta(NOTES[nn], t + (r * 8 + i) * b, b * 0.9, 0.4));
+      return n * b;
+    },
+    bpm60(t) { return EX._bpm(t, 60); },
+    bpm120(t) { return EX._bpm(t, 120); },
+    fcorda(t) { ['Do4', 'Mi4', 'Sol4'].forEach((n, i) => I.corda(NOTES[n], t + i * 0.6, 0.55)); return 1.9; },
+    fvent(t) { ['Do4', 'Mi4', 'Sol4'].forEach((n, i) => I.vent(NOTES[n], t + i * 0.6, 0.55)); return 1.9; },
+    fperc(t) { [0, 0.4, 0.8, 1.0, 1.2].forEach((x) => I.tambor(t + x)); return 1.8; },
+    felec(t) { ['Do4', 'Mi4', 'Sol4'].forEach((n, i) => I.elec(NOTES[n], t + i * 0.6, 0.55)); return 1.9; },
+    _escala(t, names, keys) {
+      const els = screenNames('m11', names);
+      keys.forEach((k, i) => { I.piano(NOTES[k], t + i * 0.6, 0.55, 0.5); flash(els[i], t + i * 0.6, 0.55); });
+      return keys.length * 0.6;
+    },
+    escala(t) { return EX._escala(t, ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si', 'Do'], ['Do4', 'Re4', 'Mi4', 'Fa4', 'Sol4', 'La4', 'Si4', 'Do5']); },
+    escalab(t) { return EX._escala(t, ['Do', 'Si', 'La', 'Sol', 'Fa', 'Mi', 'Re', 'Do'], ['Do5', 'Si4', 'La4', 'Sol4', 'Fa4', 'Mi4', 'Re4', 'Do4']); },
+  };
+
+  document.querySelectorAll('[data-play]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const same = current === btn;
+      stopAll();
+      if (same) return;                       // segon clic = atura
+      ctx(); newBus(); current = btn; btn.classList.add('on');
+      const t0 = ac.currentTime + 0.08;
+      const dur = EX[btn.dataset.play](t0);
+      at(t0 + dur + 0.2, () => { if (current === btn) { btn.classList.remove('on'); current = null; } });
+    });
+  });
+  document.getElementById('stop').addEventListener('click', () => { if (ac) stopAll(); });
+
+  // pantalles en repòs
+  screenDots('m1', 8); screenDots('m5', 8); screenDots('m6', 8);
+  screenNames('m11', ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si', 'Do']);
+})();
+</script>
+</body>
+</html>
